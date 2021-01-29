@@ -31,6 +31,27 @@ if [ "$1" == "uninstall" ]; then
   fi
 fi
 
+if [$1 == "interval"]; then
+    if brew list --versions xmlstarlet > /dev/null; then
+	brew install xmlstarlet
+	echo "Installed xmlstarlet"
+    fi
+
+    echo "Give an CalendarInterval to run brew."
+    echo "See https://www.manpagez.com/man/5/launchd.plist/ for more information."
+    echo "Everything but sensical integers will be ignored." #TODO
+    echo ""
+    read -p "Month: " month
+    read -p "Weekday: " weekday
+    read -p "Day: " day
+    read -p "Hour: " hour
+    read -p "Minute: " minute
+
+    #net.brewupdate.agent.plist $HOME/Library/LaunchAgents
+fi
+    
+    
+
 cp brewupdate.sh /usr/local/bin
 cp net.brewupdate.agent.plist $HOME/Library/LaunchAgents
 ## add StandardOutPath and StandardErrorPath to plist
