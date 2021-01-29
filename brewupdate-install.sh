@@ -47,9 +47,6 @@ fi
 brew install terminal-notifier
 echo "Installed terminal-notifier."
 
-brew install jq
-echo "Installed jq."
-
 ## create log folder
 mkdir -p $HOME/Library/Logs/Homebrew/brewupdate
 
