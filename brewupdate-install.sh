@@ -8,6 +8,7 @@
 # yyyy/mm/dd [user] [version]: [notes]
 # 2014/10/15 cgwong v0.1.0: Initial creation from https://github.com/mkalmes/brewupdate/blob/develop/brewupdate-install.sh
 # 2015/01/07 cgwong v0.2.0: Added check for successful load.
+# 2018/11/05 mrnilz v0.3.0: install local files instead of remote one
 # ############################################################################
 
 set -e
@@ -15,15 +16,12 @@ set -e
 UPDATE_SCRIPT="/usr/local/bin/brewupdate.sh"
 AGENTS="$HOME/Library/LaunchAgents"
 PLIST="$AGENTS/net.brewupdate.agent.plist"
-REPO=${REPO:-heitortsergent}
-BRANCH=${BRANCH:-master}
-REMOTE="https://github.com/$REPO/brewupdate/raw/$BRANCH"
-REMOTE_PLIST="$REMOTE/net.brewupdate.agent.plist"
-REMOTE_SCRIPT="$REMOTE/brewupdate.sh"
+
 
 [ -f "$PLIST" ] && launchctl unload "$PLIST"
+
 if [ "$1" == "uninstall" ]; then
-  rm -f "$PLIST"
+  rm -f "$PLIST" "$UPDATE_SCRIPT"
   if [ $? -eq 0 ]; then
     echo "Unloaded brewupdate."
     exit 0
@@ -33,15 +31,11 @@ if [ "$1" == "uninstall" ]; then
   fi
 fi
 
-curl -L "$REMOTE_SCRIPT" >| "$UPDATE_SCRIPT"
-if [ -f "$UPDATE_SCRIPT" ]; then
-  echo "Downloaded brewupdate.sh"
-else
-  echo "Failed downloading brewupdate.sh"
-  exit 1
-fi
+cp brewupdate.sh /usr/local/bin
+cp net.brewupdate.agent.plist $HOME/Library/LaunchAgents
+## add StandardOutPath and StandardErrorPath to plist
+sed -i '' -e "s|@USERHOME@|$HOME|g" "$PLIST"
 
-curl -L "$REMOTE_PLIST" >| "$PLIST"
 [ -f "$PLIST" ] && launchctl load "$PLIST"
 if [ $? -eq 0 ]; then
   echo "Loaded brewupdate."
@@ -53,11 +47,10 @@ fi
 brew install terminal-notifier
 echo "Installed terminal-notifier."
 
+brew install jq
+echo "Installed jq."
+
 ## create log folder
 mkdir -p $HOME/Library/Logs/Homebrew/brewupdate
 
-## add StandardOutPath and StandardErrorPath to plist
-defaults write "$PLIST" StandardOutPath $HOME/Library/Logs/Homebrew/brewupdate/brewupdate.log
-defaults write "$PLIST" StandardErrorPath $HOME/Library/Logs/Homebrew/brewupdate/brewupdate-error.log
-
-exit 0
+exit 0#!/bin/bash
