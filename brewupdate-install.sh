@@ -48,15 +48,6 @@ if [[ $1 == "interval" ]]; then
     echo "See https://www.manpagez.com/man/5/launchd.plist/ for more information."
     echo "Everything but sensical integers will be ignored." #TODO
     echo ""
-    
-    read -p "Month (1-12): " month
-    if [[ "$month" =~ ^[0-9]+$ ]] && (($month <= 12)) && (($month >= 1)); then
-	xmlstarlet ed -L -s "//plist/dict/dict[2]" -t elem -n key -v Month\
-       		   net.brewupdate.agent.plist
-	xmlstarlet ed -L -s "//plist/dict/dict[2]" -t elem -n integer -v $month\
-		   net.brewupdate.agent.plist
-    fi
-    
     read -p "Weekday (0-7) (0 & 7 are Sunday): " weekday
     if [[ "$weekday" =~ ^[0-9]+$ ]] && (($weekday <= 7)) && (($weekday >= 0)); then
 	xmlstarlet ed -L  -s "//plist/dict/dict[2]" -t elem -n key -v Weekday\
@@ -64,6 +55,15 @@ if [[ $1 == "interval" ]]; then
 	xmlstarlet ed -L -s "//plist/dict/dict[2]" -t elem -n integer -v $weekday\
       		   net.brewupdate.agent.plist
     else
+	
+	read -p "Month (1-12): " month
+	if [[ "$month" =~ ^[0-9]+$ ]] && (($month <= 12)) && (($month >= 1)); then
+	    xmlstarlet ed -L -s "//plist/dict/dict[2]" -t elem -n key -v Month\
+       		       net.brewupdate.agent.plist
+	    xmlstarlet ed -L -s "//plist/dict/dict[2]" -t elem -n integer -v $month\
+		       net.brewupdate.agent.plist
+	fi
+    
 	read -p "Day (1-31): " day
 	if [[ "$day" =~ ^[0-9]+$ ]] && (($day <= 31)) && (($day >= 1)); then
 	    xmlstarlet ed -L -s "//plist/dict/dict[2]" -t elem -n key -v Day\
