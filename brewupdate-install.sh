@@ -65,11 +65,10 @@ else
   exit 1
 fi
 
-brew install terminal-notifier
-echo "Installed terminal-notifier."
-
-brew install xmlstarlet
-echo "Installed xmlstarlet."
+if brew list --versions terminal-notifier > /dev/null;then
+    brew install terminal-notifier
+    echo "Installed terminal-notifier."
+fi
 
 ## create log folder
 mkdir -p $HOME/Library/Logs/Homebrew/brewupdate
