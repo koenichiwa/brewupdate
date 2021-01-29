@@ -21,4 +21,4 @@ if [ $? -eq 0 ]; then
 	terminal-notifier -group Homebrew -title 'Homebrew' -message 'Finished'
 else
 	terminal-notifier -group Homebrew -title 'Homebrew' -message 'Something went wrong'
-Fi
+fi
