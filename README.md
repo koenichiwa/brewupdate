@@ -4,13 +4,14 @@ brewupdate is a [launchd agent][launchd] to update [homebrew][homebrew] formulae
 
 ## IMPORTANT!
 
-brewupdate will `brew update`, `brew upgrade`, and `brew doctor` so you may want to adjust this behaviour inside `brewupdate.sh` given an upgrade may break something dependent on a certain version.
+brewupdate will `brew update`, `brew upgrade`, and `brew cleanup` so you may want to adjust this behaviour inside `brewupdate.sh` given an upgrade may break something dependent on a certain version.
 
 ## How to Install or Upgrade ##
 Run the following command in the terminal:
 
 ```shell
-$ curl -L https://github.com/heitortsergent/brewupdate/raw/master/brewupdate-install.sh | bash
+$ chmod +x brewupdate-install.sh # Might not be needed
+$ ./brewupdate-install.sh
 ```
 
 ### Manual installation ###
