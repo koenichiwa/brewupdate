@@ -19,6 +19,13 @@
       <string>update</string>
     </array>
     <key>StartCalendarInterval</key>
+    <dict>
+      <key>Weekday</key>
+      <integer>0</integer>
+      <key>Hour</key>
+      <integer>14</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
   </dict>
-  <dict/>
 </plist>
