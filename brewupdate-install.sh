@@ -47,7 +47,10 @@ fi
 brew install terminal-notifier
 echo "Installed terminal-notifier."
 
+brew install xmlstarlet
+echo "Installed xmlstarlet."
+
 ## create log folder
 mkdir -p $HOME/Library/Logs/Homebrew/brewupdate
 
-exit 0#!/bin/bash
+exit 0
