@@ -1,6 +1,6 @@
 # brewupdate #
 
-brewupdate is a [launchd agent][launchd] to update [homebrew][homebrew] formulae automatically every 7 days at 11 AM (local time).
+brewupdate is a [launchd agent][launchd] to update [homebrew][homebrew] formulae automatically every 7 days at 14:00 (local time).
 
 ## IMPORTANT!
 
